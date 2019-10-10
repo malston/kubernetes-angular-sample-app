@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spa-demo-loadbalancer
+  namespace: spa-demo
+  labels:
+    service: spa-demo
+spec:
+  type: LoadBalancer
+  selector:
+    app: spa-demo
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP

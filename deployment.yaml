@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: spa-demo
+  namespace: spa-demo
+  labels:
+    app: spa-demo
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spa-demo
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: spa-demo
+        version: v1
+    spec:
+      containers:
+        - name: spa-demo
+          image: malston/spa-demo:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 80
+
