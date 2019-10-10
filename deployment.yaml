@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: spa-demo
-          image: ${HARBOR_HOST}/library/malston/spa-demo:v3
+          image: ${HARBOR_HOST}/library/malston/spa-demo:v1
           ports:
           - containerPort: 80

@@ -32,16 +32,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ```bash
 docker_image=malston/spa-demo
-docker build -t ${docker_image}:v3 -f Dockerfile.apache .
-docker push ${docker_image}:v3
+docker build -t ${docker_image}:v1 -f Dockerfile.apache .
+docker push ${docker_image}:v1
 ```
 
 Or if using Harbor
 
 ```bash
 docker login "https://${HARBOR_HOST}" --username admin --password "${HARBOR_PASSWORD}"
-docker tag "${docker_image}:v3" "${HARBOR_HOST}/library/${docker_image}:v3"
-docker push "${HARBOR_HOST}/library/${docker_image}:v3"
+docker tag "${docker_image}:v1" "${HARBOR_HOST}/library/${docker_image}:v1"
+docker push "${HARBOR_HOST}/library/${docker_image}:v1"
 ```
 
 ## Kubernetes
