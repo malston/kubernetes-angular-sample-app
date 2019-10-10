@@ -26,9 +26,56 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+## Docker
+
+### Build the Docker image
+
+```bash
+docker_image=malston/spa-demo
+docker build -t ${docker_image}:v1 .
+docker push ${docker_image}:v1
+```
+
+Or if using Harbor
+
+```bash
+docker login "https://${HARBOR_HOST}" --username admin --password "${HARBOR_PASSWORD}"
+docker tag "${docker_image}:v1" "${HARBOR_HOST}/library/${docker_image}:v1"
+docker push "${HARBOR_HOST}/library/${docker_image}:v1"
+```
 
 ## Kubernetes
 
+### Create Namespace
+
 ```bash
-kubectl exec -it $(kubectl get pod -l app=spa-demo -o jsonpath='{.items[0].metadata.name}') -c spa-demo -- curl spa-demo:80/
+kubectl create namespace spa-demo
+```
+
+### Create a Deployment
+
+```bash
+kubectl apply -f <(envsubst '${HARBOR_HOST}' <deployment.yaml)
+```
+
+### Create a Service
+
+```bash
+kubectl apply -f load-balancer-service.yaml
+```
+
+### Monitor the Deployment
+
+```bash
+watch 'kubectl get services,pods -o wide'
+```
+
+### Access the App
+
+To access the app using a `LoadBalancer` type service:
+
+```bash
+EXTERNAL_LB_IP=$(kubectl get service spa-demo-loadbalancer -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+curl $EXTERNAL_LB_IP
 ```
