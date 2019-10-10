@@ -5,23 +5,21 @@ metadata:
   namespace: spa-demo
   labels:
     app: spa-demo
+    deployment: spa-demo-deployment
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: spa-demo
-      version: v1
   template:
     metadata:
       labels:
         app: spa-demo
-        version: v1
+        deployment: spa-demo-deployment
     spec:
       containers:
         - name: spa-demo
-          image: malston/spa-demo:v1
-          imagePullPolicy: IfNotPresent
+          image: ${HARBOR_HOST}/library/malston/spa-demo:v1
           ports:
           - containerPort: 80
-

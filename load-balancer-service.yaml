@@ -4,12 +4,12 @@ metadata:
   name: spa-demo-loadbalancer
   namespace: spa-demo
   labels:
-    service: spa-demo
+    deployment: spa-demo-deployment
 spec:
   type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
   selector:
     app: spa-demo
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
+    deployment: spa-demo-deployment
