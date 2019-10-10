@@ -67,7 +67,7 @@ kubectl apply -f load-balancer-service.yaml
 ### Monitor the Deployment
 
 ```bash
-watch 'kubectl get services,pods -o wide'
+watch 'kubectl get services,pods -n spa-demo -o wide'
 ```
 
 ### Access the App
@@ -75,7 +75,7 @@ watch 'kubectl get services,pods -o wide'
 To access the app using a `LoadBalancer` type service:
 
 ```bash
-EXTERNAL_LB_IP=$(kubectl get service spa-demo-loadbalancer -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+EXTERNAL_LB_IP=$(kubectl get service spa-demo-loadbalancer -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n spa-demo)
 
 curl $EXTERNAL_LB_IP
 ```
